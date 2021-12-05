@@ -1,4 +1,4 @@
-import { baseUrl, apiShoppingItems } from "../../app.config.js";
+import { baseUrl, apiShoppingListItems } from "../../app.config.js";
 import { createAction } from "../../libs/redux-toolkit.esm.js";
 import { errorHappened, requestCompleted, requestStarted } from "../../status/control/StatusControl.js";
 import store from "../../store.js";
@@ -13,7 +13,7 @@ export const newItem = async () => {
     const { items: { item } } = store.getState();
     requestStarted('create new item');
     try {
-        await fetch(`${baseUrl}${apiShoppingItems}`, {
+        await fetch(`${baseUrl}/${apiShoppingListItems}`, {
             method: 'POST',
             body: JSON.stringify(item),
             headers: {
@@ -34,7 +34,7 @@ export const deleteItemAction = createAction("deleteItemAction");
 export const deleteItem = async (id) => {
     requestStarted('delete item');
     try {
-        await fetch(`${baseUrl}${apiShoppingItems}/${id}`, {
+        await fetch(`${baseUrl}/${apiShoppingListItems}/${id}`, {
             method: 'DELETE'
         });
     } catch (error) {
@@ -51,7 +51,7 @@ export const getAllItems = async () => {
     let items;
     requestStarted('get all shopping items');
     try {
-        const response = await fetch(`${baseUrl}${apiShoppingItems}`);
+        const response = await fetch(`${baseUrl}/${apiShoppingListItems}`);
         items = await response.json();
     } catch (error) {
         errorHappened(error.message, 'Server error');
