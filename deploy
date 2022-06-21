@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Same as deploy file of shoppinglist-service
+
+set -o errexit
+set -o nounset
+set -o pipefail
+set -o xtrace
+
+readonly TARGET_HOST=pi@192.168.1.135
+readonly TARGET_PATH=/var/www/tanger46.duckdns.org/html
+readonly SOURCE_PATH=./app/src/
+
+rsync -azv ${SOURCE_PATH} ${TARGET_HOST}:${TARGET_PATH}
+ssh -t ${TARGET_HOST} sudo systemctl restart nginx.service

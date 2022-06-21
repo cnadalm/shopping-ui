@@ -9,11 +9,11 @@ export default class BElement extends HTMLElement {
     }
 
     log(methodName) {
-        return `${this.constructor.name}.${methodName}`
+        return `${this.constructor.name}.${methodName}`;
     }
 
     connectedCallback() {
-        console.group(this.log('connectedCallback'))
+        console.group(this.log('connectedCallback'));
         this.init();
         this.unsubscribe = store.subscribe(_ => this.triggerViewUpdate());
         console.log('subscribed for redux changes');
@@ -22,14 +22,14 @@ export default class BElement extends HTMLElement {
     }
 
     disconnectedCallback() {
-        console.group(this.log('disconnectedCallback'))
+        console.group(this.log('disconnectedCallback'));
         this.unsubscribe();
         console.log('unsubscribe called');
-        console.groupEnd(this.log('disconnectedCallback'))
+        console.groupEnd(this.log('disconnectedCallback'));
     }
 
     triggerViewUpdate() {
-        console.group(this.log('triggerViewUpdate'))
+        console.group(this.log('triggerViewUpdate'));
         console.log('Before extraction:', store.getState());
         this.state = this.extractState(store.getState());
         console.log('After extraction:', this.state);

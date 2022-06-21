@@ -1,6 +1,6 @@
 import { configureStore } from "./libs/redux-toolkit.esm.js";
 import { load } from "./localstorage/control/StorageControl.js";
-import { items } from "./shopping/entity/ItemsReducer.js";
+import { items } from "./shoppinglist/entity/ItemsReducer.js";
 import { status } from "./status/entity/StatusReducer.js";
 
 const reducer = {

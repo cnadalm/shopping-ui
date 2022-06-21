@@ -7,11 +7,12 @@ class Preview extends BElement {
         return items;
     }
     view() {
-        const { item: { label } } = this.state;
+        const { item: { name, quantity } } = this.state;
         return html`
         <div>
             <ol>
-                <li><span><b>Label:</b> ${label}</span></li>
+                <li><span><b>Name:</b> ${name}</span></li>
+                <li><span><b>Quantity:</b> ${quantity}</span></li>
             </ol>
         </div>
         `;

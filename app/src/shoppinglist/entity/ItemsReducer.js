@@ -3,21 +3,21 @@ import { itemUpdatedAction, deleteItemAction, newItemAction, gotAllItemsAction }
 
 const initialState = {
     list: [],
-    item: {}
-}
+    item: { quantity: "1" }
+};
 
 const removeItemWithId = (list, id) => {
     return list.filter(item => item.id !== id);
-}
+};
 
 export const items = createReducer(initialState, (builder) => {
     builder.addCase(itemUpdatedAction, (state, { payload: { name, value } }) => {
         state.item[name] = value;
     }).addCase(newItemAction, (state) => {
-        state.item = {}; // clear the item
+        state.item = { quantity: "1" }; // clear the item
     }).addCase(deleteItemAction, (state, { payload }) => {
         state.list = removeItemWithId(state.list, payload);
     }).addCase(gotAllItemsAction, (state, { payload }) => {
         state.list = payload;
     });
-})
+});
