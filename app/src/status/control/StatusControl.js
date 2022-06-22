@@ -11,7 +11,7 @@ export const operationSucceed = (message) => {
     store.dispatch(
         operationSucceedAction({ message })
     );
-    setTimeout(clearMessage, 15000);
+    setTimeout(clearMessage, 5000);
 };
 
 export const errorHappenedAction = createAction("errorHappenedAction");
