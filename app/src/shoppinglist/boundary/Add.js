@@ -4,6 +4,10 @@ import { itemUpdated, newItem } from "../control/ItemsControl.js";
 
 class Add extends BElement {
 
+    extractState({ items: { item } }) {
+        return item;
+    }
+
     view() {
         return html`
         <form>
@@ -13,7 +17,7 @@ class Add extends BElement {
                         <label class="label">Name</label>
                         <div class="control">
                             <input class="input is-primary" type="text" required name="name" placeholder="Name" @keyup=${e=>
-                            this.onUserInput(e)} >
+                            this.onUserInput(e)} autofocus>
                         </div>
                     </div>
                 </div>
