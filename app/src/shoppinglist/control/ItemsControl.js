@@ -48,18 +48,57 @@ export const deleteItem = async (id) => {
     store.dispatch(deleteItemAction(id));
 };
 
-export const gotAllItemsAction = createAction("gotAllItemsAction");
-export const gotAllItems = async () => {
-    let items;
-    requestStarted('get all shopping items');
+export const acquireItemAction = createAction("acquireItemAction");
+export const acquireItem = async (id) => {
+    requestStarted('acquire item');
     try {
-        const response = await fetch(`${baseUrl}/${apiItems}`);
+        await fetch(`${baseUrl}/${apiItems}/${id}/acquire`, {
+            method: 'PUT'
+        });
+    } catch (error) {
+        errorHappened('Server error', error.message);
+        return;
+    } finally {
+        requestCompleted('acquire item');
+    }
+    operationSucceed('Item acquired');
+    store.dispatch(acquireItemAction(id));
+};
+
+export const releaseItemAction = createAction("releaseItemAction");
+export const releaseItem = async (id) => {
+    requestStarted('release item');
+    try {
+        await fetch(`${baseUrl}/${apiItems}/${id}/acquire`, {
+            method: 'DELETE'
+        });
+    } catch (error) {
+        errorHappened('Server error', error.message);
+        return;
+    } finally {
+        requestCompleted('release item');
+    }
+    operationSucceed('Item released');
+    store.dispatch(releaseItemAction(id));
+};
+
+export const gotAllPendingItemsAction = createAction("gotAllPendingItemsAction");
+export const gotAllAcquiredItemsAction = createAction("gotAllAcquiredItemsAction");
+export const gotAllItemsByState = async (shoppingListState) => {
+    let items;
+    requestStarted(`get all items by state ${shoppingListState}`);
+    try {
+        const response = await fetch(`${baseUrl}/${apiItems}/${shoppingListState}`);
         items = await response.json();
     } catch (error) {
         errorHappened('Server error', error.message);
         return;
     } finally {
-        requestCompleted('get all shopping items');
+        requestCompleted(`get all items by state ${shoppingListState}`);
     }
-    store.dispatch(gotAllItemsAction(items));
+    if(shoppingListState === 'pending') {
+        store.dispatch(gotAllPendingItemsAction(items));
+    } else {
+        store.dispatch(gotAllAcquiredItemsAction(items));
+    }
 };

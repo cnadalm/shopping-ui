@@ -1,15 +1,15 @@
 import BElement from "../../BElement.js";
 import { html } from "../../libs/lit-html.js";
-import { gotAllItemsByState, acquireItem } from "../control/ItemsControl.js";
+import { gotAllItemsByState, releaseItem, deleteItem } from "../control/ItemsControl.js";
 
-class List extends BElement {
+class AcquiredList extends BElement {
     
     init() {
-        gotAllItemsByState('pending');
+        gotAllItemsByState('acquired');
     }
 
-    extractState({ items: { list } }) {
-        return list;
+    extractState({ items: { acquiredList } }) {
+        return acquiredList;
     }
 
     view() {
@@ -44,7 +44,7 @@ class List extends BElement {
                                         .filter(([key, value]) => key === 'image' && value)
                                         .map(([key, value]) =>
                                         html`
-                                        <p >
+                                        <p>
                                             <img src="data:image/*;base64, ${value}" alt="Item image" />
                                         </p>
                                         `
@@ -52,11 +52,18 @@ class List extends BElement {
                                     }
                                 </span>
                                 
-                                <button @click="${_ => acquireItem(item.id)}" class="button is-medium is-success is-light" title="Acquire">
-                                    <span class="icon">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </span>
-                                </button>
+                                <div class="field is-grouped">
+                                    <button @click="${_ => releaseItem(item.id)}" class="button is-medium is-link is-light" title="Release">
+                                        <span class="icon">
+                                            <i class="fa fa-undo" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                    <button @click="${_ => deleteItem(item.id)}" class="button is-medium is-danger is-light" title="Delete">
+                                        <span class="icon">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </span>
+                                    </button>
+                                </div>
                             </li>            
                             `;    
                         })}
@@ -64,8 +71,7 @@ class List extends BElement {
                 })}
             </ol>
         </div>
-        <!-- <button @click="${_ => gotAllItemsByState('pending')}" class="button is-small is-success is-light">refresh</button> -->
         `;
     }
 }
-customElements.define('wc-item-list', List);
+customElements.define('wc-item-acquired-list', AcquiredList);
