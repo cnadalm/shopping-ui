@@ -17,7 +17,7 @@ export const items = createReducer(initialState, (builder) => {
     }).addCase(newItemAction, (state) => {
         state.item = { quantity: "1" }; // clear the item
     }).addCase(deleteItemAction, (state, { payload }) => {
-        state.list = removeItemWithId(state.list, payload);
+        state.acquiredList = removeItemWithId(state.acquiredList, payload);
     }).addCase(acquireItemAction, (state, { payload }) => {
         state.list = removeItemWithId(state.list, payload);
     }).addCase(releaseItemAction, (state, { payload }) => {

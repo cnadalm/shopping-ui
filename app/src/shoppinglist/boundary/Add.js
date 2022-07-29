@@ -78,9 +78,9 @@ class Add extends BElement {
                         </div>
                     </div>
                 </div>
-            </div >
-        </form >
-    `;
+            </div>
+        </form>
+    `; 
     }
 
     onUserInput({ target: { name, value } }) {

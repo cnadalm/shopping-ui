@@ -54,7 +54,7 @@ nav {
     height: 80vh;
 }
 
-wc-item-preview {
+/* wc-item-preview {
     padding-top: 1rem;
     padding-bottom: 1rem;
     grid-area: view;
@@ -67,12 +67,12 @@ wc-item-add form {
     display: flex;
     flex-direction: column;
     /*align-items: flex-start;*/
-}
+/* }
 
 wc-item-list {
     width: 80%;
     padding-top: 10%;
-}
+} */
 
 li {
     display: flex;
